@@ -25,5 +25,11 @@ namespace WebApplication1.Controllers
             return StringReturn.GetRandomString();
         }
 
+        [HttpPost]
+        public String AddString(Product prod)
+        {
+            StringReturn.AddString(prod.Name);
+            return StringReturn.GetLast();
+        }
     }
 }
