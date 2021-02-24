@@ -11,9 +11,7 @@ namespace WebApplication1.Controllers
     [Route("[controller]")]
     public class StringReturnController : ControllerBase
     {
-        //пока хз зачем это
         private readonly ILogger<StringReturnController> _logger;
-        //пока хз зачем это
         public StringReturnController(ILogger<StringReturnController> logger)
         {
             _logger = logger;
@@ -22,6 +20,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public String Get(int limit = 5)
         {
+            _logger.LogInformation($"{DateTime.Now}: Got {limit} elements");
             return StringReturn.GetLast(limit);
         }
 
@@ -29,6 +28,7 @@ namespace WebApplication1.Controllers
         public String AddString(Product prod)
         {
             StringReturn.AddString(prod.Name);
+            _logger.LogInformation($"{DateTime.Now}: Added \"{prod.Name}\"");
             return StringReturn.GetLast(1);
         }
     }
