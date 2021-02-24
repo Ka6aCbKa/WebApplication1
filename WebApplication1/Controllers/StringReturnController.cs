@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public String Get(int limit = 5)
         {
-            _logger.LogInformation($"{DateTime.Now}: Got {limit} elements");
+            _logger.LogInformation($"{DateTime.Now}: Got {limit} elements ("+ this.HttpContext.Request.Method + " " + this.HttpContext.Request.Path + this.HttpContext.Request.QueryString + ")");
             return StringReturn.GetLast(limit);
         }
 
@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
         public String AddString(Product prod)
         {
             StringReturn.AddString(prod.Name);
-            _logger.LogInformation($"{DateTime.Now}: Added \"{prod.Name}\"");
+            _logger.LogInformation($"{DateTime.Now}: Added \"{prod.Name}\" (" + this.HttpContext.Request.Method + " " + this.HttpContext.Request.Path + ")");
             return StringReturn.GetLast(1);
         }
     }
