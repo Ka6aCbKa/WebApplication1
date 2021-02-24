@@ -20,16 +20,16 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public String Get()
+        public String Get(int limit = 5)
         {
-            return StringReturn.GetRandomString();
+            return StringReturn.GetLast(limit);
         }
 
         [HttpPost]
         public String AddString(Product prod)
         {
             StringReturn.AddString(prod.Name);
-            return StringReturn.GetLast();
+            return StringReturn.GetLast(1);
         }
     }
 }

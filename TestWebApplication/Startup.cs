@@ -21,6 +21,11 @@ namespace TestWebApplication
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+           
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseMiddleware<AuthenticationMiddleware>();
             app.UseMiddleware<RoutingMiddleware>();

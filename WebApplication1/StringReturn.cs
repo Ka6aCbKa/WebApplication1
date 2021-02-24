@@ -23,9 +23,21 @@ namespace WebApplication1
             Summaries.Add(str);
         }
 
-        public static string GetLast()
+        public static string GetLast(int limit)
         {
-            return "Добавлен: " + Summaries.Last();
+            if (limit<Summaries.Count && limit > 0)
+            {
+                return $"Последние {limit} элементов: " + string.Join(", ", Summaries.GetRange(Summaries.Count - limit, limit));
+            }
+            else if(limit>Summaries.Count)
+            {
+                return $"Последние {Summaries.Count} элементов: " + string.Join(", ", Summaries.GetRange(0, Summaries.Count));
+            }
+            else
+            {
+                return "Некорректное значение";
+            }
+            
         }
     }
 }
