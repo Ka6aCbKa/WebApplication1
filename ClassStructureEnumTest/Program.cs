@@ -7,9 +7,33 @@ namespace ClassStructureEnumTest
         
         static void Main(string[] args)
         {
+            Person per1 = new Person("Bill");
+            per1.Display();
+            Employee emp1 = new Employee("Tom", "Apple");
+            emp1.Display();
+            Client cli1 = new Client("Chel", "Privat");
+            cli1.Display();
+
+            Person per2 = new Employee("Clark", "Microsoft");
+            per2.Display();
+            per2.Display2();
+
+            Employee emp2 = (Employee)per2;
+            emp2.Display();
+
+            Employee emp3 = per1 as Employee;
+            if (emp3 == null)
+            {
+                Console.WriteLine("Не верное приведение типов");
+            }
+            else
+            {
+                emp3.Display();
+            }
 
 
 
+            Console.WriteLine();
             //Bitmap test
             {
                 Bitmap arg1 = Bitmap.fifth | Bitmap.first;
