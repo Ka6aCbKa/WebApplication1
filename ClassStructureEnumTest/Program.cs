@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace ClassStructureEnumTest
-{    
+{
     class Program
     {
         static void Main(string[] args)
@@ -24,16 +24,74 @@ namespace ClassStructureEnumTest
                 new User {Name="Джон", Age=29, Languages = new List<string> {"английский", "испанский" }},
                 new User {Name="Элис", Age=24, Languages = new List<string> {"испанский", "немецкий" }}
             };
+            List<Phone> phones = new List<Phone>()
+            {
+                new Phone {Name="Lumia 630", Company="Microsoft" },
+                new Phone {Name="iPhone 6", Company="Apple"},
+            };
 
-            var selectedUsers = users.SelectMany(u => u.Languages, (u, l) => new { User = u, Lang = l }).Where(u => u.Lang == "английский" && u.User.Age < 28).Select(u => u.User);
+            //Select many
+            //var selectedUsers = users.SelectMany(u => u.Languages, (u, l) => new { User = u, Lang = l }).Where(u => u.Lang == "английский" && u.User.Age < 28).Select(u => u.User);
+            var selectedUsers = from u in users
+                                from lang in u.Languages
+                                where u.Age < 28 && lang == "английский"
+                                select u;
             foreach (User use in selectedUsers)
             {
                 Console.WriteLine(use.Name);
             }
-
             Console.WriteLine();
+
+            //Проэкция переменной
+            //var usersName = users.Select(u => u.Name);
+            var usersName = from u in users
+                            select u.Name;
+            foreach (string u in usersName)
+            {
+                Console.WriteLine(u);
+            }
+            Console.WriteLine();
+
+            //Новый анонимный обьект
+            //var newUsers = users.Select(u => new
+            //{
+            //    Name = u.Name,
+            //    DateBirth = DateTime.Now.Year - u.Age
+            //});
+            var newUsers = from u in users
+                           let n = "Mr. " + u.Name
+                           select new
+                           {
+                               Name = n,
+                               DateBirth = DateTime.Now.Year - u.Age
+                           };
+            foreach (var u in newUsers)
+            {
+                Console.WriteLine($"{u.Name} was born in {u.DateBirth}");
+            }
+            Console.WriteLine();
+
+            //Выборка с нескольких обьектов
+            //var usersPhone = users.SelectMany(u => phones, (u, p) => new { Name = u.Name, Phone = p.Name });
+            var usersPhone = from u in users
+                             from p in phones
+                             select new
+                             {
+                                 Name = u.Name,
+                                 Phone = p.Name
+                             };
+            foreach (var u in usersPhone)
+            {
+                Console.WriteLine($"{u.Name} got {u.Phone} mobile");
+            }
+            Console.WriteLine();
+
             string[] teams = { "Бавария", "Боруссия", "Реал Мадрид", "Манчестер Сити", "ПСЖ", "Барселона" };
-            var selectedTeams = teams.Where(t => t.ToUpper().StartsWith("Б")).OrderBy(t => t);
+            //var selectedTeams = teams.Where(t => t.ToUpper().StartsWith("Б")).OrderBy(t => t);
+            var selectedTeams = from t in teams
+                                where t.ToUpper().StartsWith("Б")
+                                orderby t
+                                select t;
             foreach (string s in selectedTeams)
             {
                 Console.WriteLine(s);
